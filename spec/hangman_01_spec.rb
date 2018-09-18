@@ -1,5 +1,5 @@
 require "rspec"
-require "hangman"
+require "hangman" 
 
 describe "Phase I" do
   describe "ComputerPlayer" do
