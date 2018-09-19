@@ -14,7 +14,13 @@ class Hangman
   end
 
   def take_turn
+    x = @guesser.guess
+    @referee.check_guess(x)
+    update_board
+    @guesser.handle_response
+  end
 
+  def update_board
   end
 
 end
@@ -25,6 +31,10 @@ class HumanPlayer
   end
 
   def guess(args)
+    args
+  end
+
+  def handle_response
   end
 end
 
@@ -44,6 +54,13 @@ class ComputerPlayer
       result.push(idx) if ltr == el
     end
     result
+  end
+
+  def register_secret_length (lgth)
+  end
+
+  def guess (board)
+    
   end
 
 end
