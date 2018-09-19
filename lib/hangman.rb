@@ -60,7 +60,11 @@ class ComputerPlayer
   end
 
   def guess (board)
-    
+    ("a".."z").to_a[rand(26)]
+  end
+
+  def handle_response (ltr, arr)
+
   end
 
 end
