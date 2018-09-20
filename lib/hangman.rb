@@ -27,11 +27,11 @@ end
 
 class HumanPlayer
   def register_secret_length (lgth)
-
+    # prints to reader how long the length is
   end
 
-  def guess(args)
-    args
+  def guess(arg)
+    # diplays the board and returns the user's guess
   end
 
   def handle_response
