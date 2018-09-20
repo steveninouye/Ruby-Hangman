@@ -39,12 +39,15 @@ class HumanPlayer
 end
 
 class ComputerPlayer
+  attr_reader :candidate_words
+
   def initialize (dictionary)
     @dictionary = dictionary
   end
 
   def pick_secret_word
-    @dictionary[0].length
+    @secret_word = @dictionary.sample
+    @secret_word.length
   end
 
   def check_guess (ltr)
@@ -57,6 +60,7 @@ class ComputerPlayer
   end
 
   def register_secret_length (lgth)
+    @candidate_words = @dictionary.select{|el| el.length == lgth}
   end
 
   def guess (board)
@@ -67,4 +71,7 @@ class ComputerPlayer
 
   end
 
+  def candidate_words
+
+  end
 end
