@@ -9,14 +9,14 @@ class Hangman
 
   def play
     while @guesses_available > 0
-      
+
     end
   end
 
   def setup
-    num = @referee.pick_secret_word
-    @guesser.register_secret_length(num)
-    @board = num
+    lgth = @referee.pick_secret_word
+    @guesser.register_secret_length(lgth)
+    @board = [nil] * lgth
   end
 
   def take_turn
@@ -65,7 +65,7 @@ class ComputerPlayer
 
   def check_guess (ltr)
     result = []
-    @secret_word.each_with_index do |el,idx|
+    @secret_word.split("").each_with_index do |el,idx|
       result.push(idx) if ltr == el
     end
     result
