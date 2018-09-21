@@ -72,18 +72,20 @@ class ComputerPlayer
   end
 
   def register_secret_length (lgth)
-    @candidate_words = @dictionary.select{|el| el.length == lgth}
+    @candidate_words = @dictionary.select{|word| word.length == lgth}
   end
-
-  def guess (board)
-    ("a".."z").to_a[rand(26)]
+  
+  def handle_response (ltr, indices)
+    @candidate_words.delete_if do |word|
+      indices != (0...word.length).find_all {|i| word[i] == ltr}
+    end
   end
+  
+  # def guess (board)
+  #   ("a".."z").to_a[rand(26)]
+  # end
 
-  def handle_response (ltr, arr)
-    arr
-  end
+  # def candidate_words
 
-  def candidate_words
-
-  end
+  # end
 end
