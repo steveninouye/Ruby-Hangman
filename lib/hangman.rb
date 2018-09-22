@@ -82,15 +82,16 @@ class ComputerPlayer
   end
   
   def guess (board)
-    
+    str = @candidate_words.reduce {|a,c| a + c }
+    ltr_count = count_num_letters(str, board)
+    ltr_count.max_by{|k,v| v}.first
   end
 
-  # def candidate_words
-
-  # end
-
   private
-  def count_num_letters(str)
-
+  def count_num_letters(str, board)
+    str.chars.reduce(Hash.new(0)) do |hash,ltr|
+      hash[ltr] += 1 if !board.include?(ltr)
+      hash
+    end
   end
 end
