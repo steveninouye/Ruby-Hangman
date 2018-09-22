@@ -81,11 +81,16 @@ class ComputerPlayer
     end
   end
   
-  # def guess (board)
-  #   ("a".."z").to_a[rand(26)]
-  # end
+  def guess (board)
+    
+  end
 
   # def candidate_words
 
   # end
+
+  private
+  def count_letters
+    
+  end
 end
