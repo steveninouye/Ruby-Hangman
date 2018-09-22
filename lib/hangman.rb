@@ -90,7 +90,7 @@ class ComputerPlayer
   # end
 
   private
-  def count_letters
-    
+  def count_num_letters(str)
+
   end
 end
