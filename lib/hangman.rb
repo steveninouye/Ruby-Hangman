@@ -11,7 +11,7 @@ class Hangman
     setup
     # need to work on this
     while @guesses_available > 0
-
+      take_turn
     end
   end
 
@@ -22,10 +22,10 @@ class Hangman
   end
 
   def take_turn
-    guess = @guesser.guess
+    guess = @guesser.guess(@board)
     correct_idxs = @referee.check_guess(guess)
     update_board(guess, correct_idxs)
-    @guesser.handle_response
+    @guesser.handle_response(guess, correct_idxs)
   end
 
   def update_board(ltr, indicies)
@@ -43,12 +43,18 @@ class HumanPlayer
 
   def guess(board)
     p board
-    p "Guess a letter"
-    gets.chomp
+    input = nil
+    while true
+      p "Guess a letter"
+      input = gets.chomp.downcase
+      break if ("a".."z").include?(input)
+      p "Input valid input"
+    end
+    input
   end
 
-  def handle_response(guess, idx)
-    str = idx.reduce("") {|a,c| a + "," + (c+1).to_s}
+  def handle_response(guess, indicies)
+    str = indicies.reduce("") {|a,c| a + "," + (c+1).to_s}
     p "The letter #{guess} was found at #{str}"
   end
 
