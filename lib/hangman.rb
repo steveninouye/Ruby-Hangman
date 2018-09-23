@@ -72,6 +72,10 @@ end
 class ComputerPlayer
   attr_reader :candidate_words
 
+  def self.get_words(file)
+    File.readlines(file).map(&:chomp)
+  end
+
   def initialize (dictionary)
     @dictionary = dictionary
   end
