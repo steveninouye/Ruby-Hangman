@@ -21,14 +21,16 @@ class Hangman
   end
 
   def take_turn
-    x = @guesser.guess
-    @referee.check_guess(x)
-    update_board
+    guess = @guesser.guess
+    correct_idxs = @referee.check_guess(guess) # returns array of indicies where letter is found
+    update_board(guess, correct_idxs)
     @guesser.handle_response
   end
 
-  def update_board
-    # need to work on this too
+  def update_board(ltr, indicies)
+    indicies.each do |idx|
+      @board[idx] = ltr
+    end
   end
 
 end
@@ -84,9 +86,9 @@ class ComputerPlayer
     @candidate_words = @dictionary.select{|word| word.length == lgth}
   end
   
-  def handle_response (ltr, indices)
+  def handle_response (ltr, indicies)
     @candidate_words.delete_if do |word|
-      indices != (0...word.length).find_all {|i| word[i] == ltr}
+      indicies != (0...word.length).find_all {|i| word[i] == ltr}
     end
   end
   
