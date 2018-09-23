@@ -8,6 +8,7 @@ class Hangman
   end
 
   def play
+    setup
     # need to work on this
     while @guesses_available > 0
 
@@ -22,7 +23,7 @@ class Hangman
 
   def take_turn
     guess = @guesser.guess
-    correct_idxs = @referee.check_guess(guess) # returns array of indicies where letter is found
+    correct_idxs = @referee.check_guess(guess)
     update_board(guess, correct_idxs)
     @guesser.handle_response
   end
