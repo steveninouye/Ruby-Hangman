@@ -50,15 +50,13 @@ class HumanPlayer
   end
 
   def pick_secret_word
-    # displays directions to user to pick lenght of word
-    # gets user input and verifies it is an valid input
     p "How long would you like your secret word to be?"
-    begin
-      input = gets.chomp
-    rescue
-      p "Enter a whole number"
-      retry
+    length = nil
+    until length
+      input = gets.chomp.to_i
+      length = input > 0 ? input : nil
     end
+    length
   end
 end
 
