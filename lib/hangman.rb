@@ -8,6 +8,7 @@ class Hangman
   end
 
   def play
+    # need to work on this
     while @guesses_available > 0
 
     end
@@ -27,20 +28,20 @@ class Hangman
   end
 
   def update_board
+    # need to work on this too
   end
 
 end
 
 class HumanPlayer
   def register_secret_length (lgth)
-    # prints to reader how long the length is
+    p "The Secret Word is #{lgth} letters long"
   end
 
   def guess(board)
-    # diplays the board and returns the user's guess
     p board
-    input = gets.chomp
-    input
+    p "Guess a letter"
+    gets.chomp
   end
 
   def handle_response(guess, idx)
@@ -51,6 +52,13 @@ class HumanPlayer
   def pick_secret_word
     # displays directions to user to pick lenght of word
     # gets user input and verifies it is an valid input
+    p "How long would you like your secret word to be?"
+    begin
+      input = gets.chomp
+    rescue
+      p "Enter a whole number"
+      retry
+    end
   end
 end
 
