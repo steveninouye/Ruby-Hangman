@@ -36,8 +36,11 @@ class HumanPlayer
     # prints to reader how long the length is
   end
 
-  def guess(arg)
+  def guess(board)
     # diplays the board and returns the user's guess
+    p board
+    input = gets.chomp
+    input
   end
 
   def handle_response(guess, idx)
