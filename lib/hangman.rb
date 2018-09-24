@@ -119,4 +119,6 @@ class ComputerPlayer
 end
 
 guesser = HumanPlayer.new
-referee = ComputerPlayer.new
+referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
+
+Hangman.new({guesser: guesser, referee: referee})
