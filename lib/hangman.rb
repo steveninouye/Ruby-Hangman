@@ -82,6 +82,7 @@ class ComputerPlayer
 
   def pick_secret_word
     @secret_word = @dictionary.sample
+    p @secret_word
     @secret_word.length
   end
 
@@ -121,4 +122,5 @@ end
 guesser = HumanPlayer.new
 referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
 
-Hangman.new({guesser: guesser, referee: referee})
+game = Hangman.new({guesser: guesser, referee: referee})
+game.play
