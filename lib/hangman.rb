@@ -11,15 +11,10 @@ class Hangman
     setup
     # need to work on this
     while @guesses_available > 0 && !won?
-      take_turn
-      @guesses_available -= 1
+      is_guess_incorrect = take_turn
+      @guesses_available -= 1 if is_guess_incorrect
     end
-    if won?
-      puts "You won the game!"
-    else
-      puts "You have run out of guesses" if @guesses_available == 0
-    end
-    puts "The Correct answer is #{@referee.answer}"
+    conclude_game
   end
 
   def setup
@@ -33,6 +28,7 @@ class Hangman
     correct_idxs = @referee.check_guess(guess)
     update_board(guess, correct_idxs)
     @guesser.handle_response(guess, correct_idxs)
+    correct_idxs.length == 0
   end
 
   def update_board(ltr, indicies)
@@ -44,11 +40,20 @@ class Hangman
   def won?
     @board == @board.compact
   end
+
+  def conclude_game
+    if won?
+      puts "You won the game!"
+    else
+      puts "You have run out of guesses"
+    end
+    puts "The Correct answer is #{@referee.answer}"
+  end
 end
 
 class HumanPlayer
   def register_secret_length (lgth)
-    p "The Secret Word is #{lgth} letters long"
+    puts "The Secret Word is #{lgth} letters long"
   end
 
   def guess(board)
@@ -68,12 +73,12 @@ class HumanPlayer
       puts "No letters were found"
     else
       str = indicies.reduce {|a,c| a.to_s + "," + (c+1).to_s}
-      p "The letter #{guess} was found at #{str}"
+      puts "The letter #{guess} was found at #{str}"
     end
   end
 
   def pick_secret_word
-    p "How long would you like your secret word to be?"
+    puts "How long would you like your secret word to be?"
     length = nil
     until length
       input = gets.chomp.to_i
@@ -136,8 +141,8 @@ class ComputerPlayer
   end
 end
 
-guesser = HumanPlayer.new
-referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
+# guesser = HumanPlayer.new
+# referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
 
-game = Hangman.new({guesser: guesser, referee: referee})
-game.play
+# game = Hangman.new({guesser: guesser, referee: referee})
+# game.play
