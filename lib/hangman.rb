@@ -12,7 +12,14 @@ class Hangman
     # need to work on this
     while @guesses_available > 0 && !won?
       take_turn
+      @guesses_available -= 1
     end
+    if won?
+      p "You won the game!"
+    else
+      p "You have run out of guesses" if @guesses_available == 0
+    end
+    p "The Correct answer is #{@referee.answer}"
   end
 
   def setup
@@ -85,7 +92,6 @@ class ComputerPlayer
 
   def pick_secret_word
     @secret_word = @dictionary.sample
-    p @secret_word
     @secret_word.length
   end
 
@@ -111,6 +117,10 @@ class ComputerPlayer
     str = @candidate_words.reduce {|a,c| a + c }
     ltr_count = count_num_letters(str, board)
     ltr_count.max_by{|k,v| v}.first
+  end
+
+  def answer
+    @secret_word
   end
 
   private
