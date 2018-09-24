@@ -15,11 +15,11 @@ class Hangman
       @guesses_available -= 1
     end
     if won?
-      p "You won the game!"
+      puts "You won the game!"
     else
-      p "You have run out of guesses" if @guesses_available == 0
+      puts "You have run out of guesses" if @guesses_available == 0
     end
-    p "The Correct answer is #{@referee.answer}"
+    puts "The Correct answer is #{@referee.answer}"
   end
 
   def setup
@@ -55,17 +55,21 @@ class HumanPlayer
     p board
     input = nil
     while true
-      p "Guess a letter"
+      puts "Guess a letter"
       input = gets.chomp.downcase
       break if ("a".."z").include?(input)
-      p "Input valid input"
+      puts "Input valid input"
     end
     input
   end
 
   def handle_response(guess, indicies)
-    str = indicies.reduce("") {|a,c| a + "," + (c+1).to_s}
-    p "The letter #{guess} was found at #{str}"
+    if indicies.length == 0
+      puts "No letters were found"
+    else
+      str = indicies.reduce {|a,c| a.to_s + "," + (c+1).to_s}
+      p "The letter #{guess} was found at #{str}"
+    end
   end
 
   def pick_secret_word
