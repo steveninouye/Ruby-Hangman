@@ -42,12 +42,13 @@ class Hangman
   end
 
   def conclude_game
-    if won?
-      puts "You won the game!"
-    else
-      puts "You have run out of guesses"
-    end
+    puts game_result
     puts "The Correct answer is #{@referee.answer}"
+  end
+  
+  def game_result
+    return "You won the game!" if won?
+    "You have run out of guesses"
   end
 end
 
@@ -141,8 +142,8 @@ class ComputerPlayer
   end
 end
 
-# guesser = HumanPlayer.new
-# referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
+guesser = HumanPlayer.new
+referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
 
-# game = Hangman.new({guesser: guesser, referee: referee})
-# game.play
+game = Hangman.new({guesser: guesser, referee: referee})
+game.play
