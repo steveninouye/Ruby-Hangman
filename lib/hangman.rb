@@ -117,3 +117,6 @@ class ComputerPlayer
     end
   end
 end
+
+guesser = HumanPlayer.new
+referee = ComputerPlayer.new
