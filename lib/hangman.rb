@@ -10,7 +10,7 @@ class Hangman
   def play
     setup
     # need to work on this
-    while @guesses_available > 0
+    while @guesses_available > 0 && !won?
       take_turn
     end
   end
@@ -34,6 +34,9 @@ class Hangman
     end
   end
 
+  def won?
+    @board == @board.compact
+  end
 end
 
 class HumanPlayer
