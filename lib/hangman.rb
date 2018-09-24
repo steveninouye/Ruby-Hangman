@@ -142,8 +142,10 @@ class ComputerPlayer
   end
 end
 
-guesser = HumanPlayer.new
-referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
-
-game = Hangman.new({guesser: guesser, referee: referee})
-game.play
+if __FILE__ == $PROGRAM_NAME
+  guesser = HumanPlayer.new
+  referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
+  
+  game = Hangman.new({guesser: guesser, referee: referee})
+  game.play
+end
