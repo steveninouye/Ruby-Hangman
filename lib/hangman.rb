@@ -1,3 +1,6 @@
+require_relative "./computer_player.rb"
+require_relative "./human_player.rb"
+
 class Hangman
   attr_reader :guesser, :referee, :board
 
@@ -9,7 +12,6 @@ class Hangman
 
   def play
     setup
-    # need to work on this
     while @guesses_available > 0 && !won?
       is_guess_incorrect = take_turn
       @guesses_available -= 1 if is_guess_incorrect
@@ -52,123 +54,5 @@ class Hangman
   end
 end
 
-class HumanPlayer
-  def register_secret_length (lgth)
-    puts "The Secret Word is #{lgth} letters long"
-  end
 
-  def guess(board)
-    p board
-    input = nil
-    while true
-      puts "Guess a letter"
-      input = gets.chomp.downcase
-      break if ("a".."z").include?(input)
-      puts "Input valid input"
-    end
-    input
-  end
 
-  def handle_response(guess, indicies)
-    if indicies.length == 0
-      puts "No letters were found"
-    else
-      str = indicies.reduce {|a,c| a.to_s + "," + (c+1).to_s}
-      puts "The letter #{guess} was found at #{str}"
-    end
-  end
-
-  def pick_secret_word
-    puts "How long would you like your secret word to be?"
-    length = nil
-    until length
-      input = gets.chomp.to_i
-      length = input > 0 ? input : nil
-    end
-    length
-  end
-end
-
-class ComputerPlayer
-  attr_reader :candidate_words
-
-  def self.get_words(file)
-    File.readlines(file).map(&:chomp)
-  end
-
-  def initialize (dictionary)
-    @dictionary = dictionary
-  end
-
-  def pick_secret_word
-    @secret_word = @dictionary.sample
-    @secret_word.length
-  end
-
-  def check_guess (ltr)
-    result = []
-    @secret_word.split("").each_with_index do |el,idx|
-      result.push(idx) if ltr == el
-    end
-    result
-  end
-
-  def register_secret_length (lgth)
-    @candidate_words = @dictionary.select{|word| word.length == lgth}
-  end
-  
-  def handle_response (ltr, indicies)
-    @candidate_words.delete_if do |word|
-      indicies != (0...word.length).find_all {|i| word[i] == ltr}
-    end
-  end
-  
-  def guess (board)
-    str = @candidate_words.reduce {|a,c| a + c }
-    ltr_count = count_num_letters(str, board)
-    ltr_count.max_by{|k,v| v}.first
-  end
-
-  def answer
-    @secret_word
-  end
-
-  private
-  def count_num_letters(str, board)
-    str.chars.reduce(Hash.new(0)) do |hash,ltr|
-      hash[ltr] += 1 if !board.include?(ltr)
-      hash
-    end
-  end
-end
-
-def get_inputs(obj)
-  obj.each_key do |key|
-    until is_valid_input(obj[key])
-      puts "Who will be the #{key.to_s}? Human(h) / Computer (c)"
-      obj[key] = gets.chomp.downcase
-      display_invalid_input if !is_valid_input(obj[key])
-    end
-  end
-end
-
-def display_invalid_input
-  puts "INPUT NOT VALID"
-  puts "Enter 'h' for Human or 'c' for Computer"
-end
-
-def is_valid_input(input)
-  return true if input == "h" || input == "c"
-  false
-end
-
-if __FILE__ == $PROGRAM_NAME
-  input = {:guesser => nil, :referee => nil}
-  get_inputs(input)
-  words = ComputerPlayer.get_words('./lib/dictionary.txt')
-  guesser = input[:guesser] == "h" ? HumanPlayer.new : ComputerPlayer.new(words)
-  referee = input[:referee] == "h" ? HumanPlayer.new : ComputerPlayer.new(words)
-  
-  game = Hangman.new({guesser: guesser, referee: referee})
-  game.play
-end
