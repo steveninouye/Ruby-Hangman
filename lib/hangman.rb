@@ -142,9 +142,32 @@ class ComputerPlayer
   end
 end
 
+def get_inputs(obj)
+  obj.each_key do |key|
+    until is_valid_input(obj[key])
+      puts "Who will be the #{key.to_s}? Human(h) / Computer (c)"
+      obj[key] = gets.chomp.downcase
+      display_invalid_input if !is_valid_input(obj[key])
+    end
+  end
+end
+
+def display_invalid_input
+  puts "INPUT NOT VALID"
+  puts "Enter 'h' for Human or 'c' for Computer"
+end
+
+def is_valid_input(input)
+  return true if input == "h" || input == "c"
+  false
+end
+
 if __FILE__ == $PROGRAM_NAME
-  guesser = HumanPlayer.new
-  referee = ComputerPlayer.new(ComputerPlayer.get_words('./lib/dictionary.txt'))
+  input = {:guesser => nil, :referee => nil}
+  get_inputs(input)
+  words = ComputerPlayer.get_words('./lib/dictionary.txt')
+  guesser = input[:guesser] == "h" ? HumanPlayer.new : ComputerPlayer.new(words)
+  referee = input[:referee] == "h" ? HumanPlayer.new : ComputerPlayer.new(words)
   
   game = Hangman.new({guesser: guesser, referee: referee})
   game.play
