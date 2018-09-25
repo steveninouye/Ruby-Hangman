@@ -25,7 +25,7 @@ class HumanPlayer
         if indicies.length == 0
             puts "No letters were found"
         else
-            str = indicies.reduce {|a,c| a.to_s + "," + (c+1).to_s}
+            str = indicies.reduce {|a,c| (a+1).to_s + "," + (c+1).to_s}
             puts "The letter #{guess} was found at #{str}"
         end
     end
