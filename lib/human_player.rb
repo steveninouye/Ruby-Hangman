@@ -35,6 +35,7 @@ class HumanPlayer
     end
 
     def check_guess (ltr)
+        puts "The letter >> #{ltr} << was guessed"
     end
 
     def answer
